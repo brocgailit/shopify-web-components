@@ -1,7 +1,7 @@
 {
   "name": "shopify-web-components",
   "version": "0.0.5",
-  "description": "Shopify Add to Cart Form",
+  "description": "Shopify Web Components",
   "main": "index.js",
   "module": "index.js",
   "type": "module",

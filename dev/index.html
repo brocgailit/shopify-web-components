@@ -1,0 +1,83 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>&lt;shopify-cart-button> Demo</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1" name="viewport">
+    <script type="module" src="../shopify-cart-button.js"></script>
+    <style>
+      html {
+        --shopify--color-primary: #e2997c;
+        --shopify--color-primary-highlight: #ebb7a2;
+        --shopify--color-white: white;
+        --shopify--color-dark: #222;
+        --shopify--color-grey: #bbb;
+        --shopify--size-1: 5rem;
+        --shopify--size-2: 3.75rem;
+        --shopify--size-3: 2.75rem;
+        --shopify--size-4: 2rem;
+        --shopify--size-5: 1.5rem;
+        --shopify--size-6: 1.1rem;
+        --shopify--size-7: 0.9rem;
+        --shopify--size-8: 0.7rem;
+        --shopify--radius: 3px;
+        --shopify--navbar-height: 4rem;
+      }
+      body {
+        background-color: #eee;
+      }
+      p {
+        margin: 0;
+        padding: 0 8px 1em;
+        text-align: center;
+      }
+      section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 50vh;
+      }
+      #notify-element {
+        border: 1px solid black;
+        display: inline-block;
+        padding: 1rem;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <shopify-cart-button id="cartButton" update-action="/dev/data/cart.json" remove-action="/dev/data/change.json">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="32px"
+          height="32px"
+          viewBox="0 0 26.458 26.458"
+        >
+          <title>Shopping Cart Icon</title>
+          <g fill="none" stroke="currentColor" stroke-width="2">
+            <path
+              d="M8.247 12.297V6.49a4.982 4.982 0 119.964 0v5.806"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M3.158 7.941V24.95H23.3V7.94"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M3.158 7.941H23.3"
+              stroke-linecap="square"
+            />
+          </g>
+        </svg>
+      </shopify-cart-button>
+    </section>
+    <section>
+      <button onclick="document.getElementById('cartButton').updateCart()">
+        Hi there
+      </button>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+{
+  "name": "shopify-web-components",
+  "version": "0.0.5",
+  "description": "Shopify Add to Cart Form",
+  "main": "index.js",
+  "module": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
+    "lint:eslint": "eslint 'src/**/*.ts'",
+    "lint:lit-analyzer": "lit-analyzer",
+    "format": "prettier src/* --write",
+    "serve": "es-dev-server --node-resolve --watch",
+    "dev": "concurrently npm:build:watch npm:serve"
+  },
+  "keywords": [
+    "web-components",
+    "lit-element",
+    "typescript"
+  ],
+  "author": "Heavy Craft LLC",
+  "dependencies": {
+    "lit-element": "^2.3.1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/parser": "^2.27.0",
+    "concurrently": "^5.1.0",
+    "es-dev-server": "^1.46.1",
+    "eslint": "^6.8.0",
+    "lit-analyzer": "^1.1.10",
+    "prettier": "^2.0.4",
+    "typescript": "^3.8.3"
+  }
+}

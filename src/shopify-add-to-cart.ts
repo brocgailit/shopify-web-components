@@ -1,7 +1,7 @@
 import { LitElement, html, customElement, property, internalProperty, css } from 'lit-element';
 import { directive, NodePart } from 'lit-html';
 import { repeat } from 'lit-html/directives/repeat';
-import { buttonStyles } from './style/buttonStyles.js';
+import { base as buttonStyle } from './style/buttonStyles.js';
 import './shopify-increment';
 
 const formatPrice = directive((price) => (part: NodePart) => {
@@ -17,7 +17,7 @@ export class AddToCart extends LitElement {
 
   static get styles() {
     return [
-      buttonStyles,
+      buttonStyle,
       css`
         :host {
           display: block;

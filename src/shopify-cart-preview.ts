@@ -3,7 +3,7 @@ import { repeat } from 'lit-html/directives/repeat';
 import Defaults from './defaults';
 
 import { directive } from 'lit-html';
-import { buttonStyles } from './style/buttonStyles.js';
+import { base as buttonStyle, deleteStyle } from './style/buttonStyles.js';
 
 const resizeImage = directive((price, size) => (part) => {
   const [, name, extension] = price.match(/(.*\/[\w\-\_\.]+)\.(\w{2,4})/);
@@ -15,7 +15,8 @@ export class CartPreview extends LitElement {
 
   static get styles() {
     return [
-      buttonStyles,
+      buttonStyle,
+      deleteStyle,
       css`
     :host {
       position: fixed;
@@ -43,6 +44,15 @@ export class CartPreview extends LitElement {
       grid-template:
         'image item actions'
         'image quantity actions';
+      grid-column-gap: 10px;
+    }
+
+    li:first-child {
+      padding-top: 0;
+    }
+
+    li:last-child {
+      padding-bottom: 0;
     }
 
     li:not(:last-child) {
@@ -66,8 +76,19 @@ export class CartPreview extends LitElement {
       grid-area: item;
     }
 
+    .item--quantity {
+      grid-area: quantity;
+      font-size: 75%;
+      color: var(--shopify--color-grey);
+    }
+
     .item--actions {
       grid-area: actions;
+    }
+
+    .button {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
     }
   `
     ]
@@ -145,14 +166,14 @@ export class CartPreview extends LitElement {
             <span class="item--name">${item.title}</span>
             <span class="item--quantity">Quantity: ${item.quantity}</span>
             <div class="item--actions">
-              <button @click="${() => this.removeItem(item.id)}">
+              <button class="delete" @click="${() => this.removeItem(item.id)}">
                 X
               </button>
             </div>
           </li>
         `)}
       </ul>
-      <a class="button fullwidth" href="${this.cartAction}">
+      <a class="button fullwidth small" href="${this.cartAction}">
         View Cart
       </a>
     `: ''

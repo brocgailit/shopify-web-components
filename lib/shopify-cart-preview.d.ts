@@ -8,7 +8,7 @@ export declare class CartPreview extends LitElement {
     handleClose(event: MouseEvent): void;
     connectedCallback(): void;
     disconnectedCallback(): void;
-    render(): import("lit-element").TemplateResult | "";
+    render(): "" | import("lit-element").TemplateResult;
 }
 interface CartItem {
     id: number;

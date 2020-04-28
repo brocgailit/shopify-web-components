@@ -1,5 +1,6 @@
 import { LitElement, html, customElement, property, css } from 'lit-element';
 import './shopify-cart-preview';
+import Defaults from './defaults';
 
 @customElement('shopify-cart-button')
 export class CartButton extends LitElement {
@@ -54,14 +55,14 @@ export class CartButton extends LitElement {
   @property({type: Number})
   quantity = 0;
 
-  @property({type: String})
-  href = '/cart';
+  @property({type: String, attribute: 'cart-action'})
+  cartAction = Defaults.DEFAULT_CART_ACTION;
 
   @property({type: String, attribute: 'update-action'})
-  updateAction = '/cart.js';
+  updateAction = Defaults.DEFAULT_UPDATE_ACTION;
 
   @property({type: String, attribute: 'remove-action'})
-  removeAction = '/cart/change.js';
+  removeAction = Defaults.DEFAULT_REMOVE_ACTION;
 
   firstUpdated() {
     this.updateCart();
@@ -81,6 +82,7 @@ export class CartButton extends LitElement {
           preview = document.querySelector('shopify-cart-preview');
         }
         preview!.setAttribute('remove-action', this.removeAction);
+        preview!.setAttribute('cart-action', this.cartAction);
         preview!.items = items;
       }
     } catch(error) {
@@ -96,7 +98,7 @@ export class CartButton extends LitElement {
 
   render() {
     return html`
-        <a href="${this.href}">
+        <a href="${this.cartAction}">
           <slot></slot>
           <slot name="display"></slot>
         </a>

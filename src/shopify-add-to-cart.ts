@@ -1,6 +1,7 @@
 import { LitElement, html, customElement, property, internalProperty, css } from 'lit-element';
 import { directive, NodePart } from 'lit-html';
 import { repeat } from 'lit-html/directives/repeat';
+import { buttonStyles } from './style/buttonStyles.js';
 import './shopify-increment';
 
 const formatPrice = directive((price) => (part: NodePart) => {
@@ -14,95 +15,81 @@ const formatPrice = directive((price) => (part: NodePart) => {
 @customElement('shopify-add-to-cart')
 export class AddToCart extends LitElement {
 
-  static styles = css`
-    :host {
-      display: block;
-      max-width: 800px;
-      width: 100%;
-    }
+  static get styles() {
+    return [
+      buttonStyles,
+      css`
+        :host {
+          display: block;
+          max-width: 800px;
+          width: 100%;
+        }
 
-    .shopify--total {
-      text-align: center;
-      color: var(--shopify--color-dark);
-      padding: var(--shopify--size-5);
-      font-size:  var(--shopify--size-3);
-      margin: 0;
-      line-height: 1;
-    }
+        .shopify--total {
+          text-align: center;
+          color: var(--shopify--color-dark);
+          padding: var(--shopify--size-5);
+          font-size:  var(--shopify--size-3);
+          margin: 0;
+          line-height: 1;
+        }
 
-    .shopify--variants {
-      display: flex;
-      justify-content: center;
-      margin-bottom: var(--shopify--size-6);
-    }
+        .shopify--variants {
+          display: flex;
+          justify-content: center;
+          margin-bottom: var(--shopify--size-6);
+        }
 
-    .shopify--variant{
-      flex-grow: 1;
-    }
+        .shopify--variant{
+          flex-grow: 1;
+        }
 
-    .shopify--variant:not(:last-child) {
-      padding-right: var(--shopify--size-8);
-    }
+        .shopify--variant:not(:last-child) {
+          padding-right: var(--shopify--size-8);
+        }
 
-    .shopify--variant label {
-      display: flex;
-      flex-direction: column;
-      text-align: center;
-      align-items: center;
-      border: 2px solid transparent;
-      padding: var(--shopify--size-6);
-      background-color: white;
-      background-color: var(--shopify--color-white);
-      border-radius: var(--shopify--radius);
-      color: var(--shopify--color-dark);
-      font-size: var(--shopify--size-6);
-      cursor: pointer;
-    }
+        .shopify--variant label {
+          display: flex;
+          flex-direction: column;
+          text-align: center;
+          align-items: center;
+          border: 2px solid transparent;
+          padding: var(--shopify--size-6);
+          background-color: white;
+          background-color: var(--shopify--color-white);
+          border-radius: var(--shopify--radius);
+          color: var(--shopify--color-dark);
+          font-size: var(--shopify--size-6);
+          cursor: pointer;
+        }
 
-    .shopify--variant input {
-      display: block;
-      position: absolute;
-      height: 0;
-      width: 0;
-      opacity: 0;
-    }
+        .shopify--variant input {
+          display: block;
+          position: absolute;
+          height: 0;
+          width: 0;
+          opacity: 0;
+        }
 
-    .shopify--variant input:checked + label{
-      border-color: black;
-      border-color: var(--shopify--color-grey);
-    }
+        .shopify--variant input:checked + label{
+          border-color: black;
+          border-color: var(--shopify--color-grey);
+        }
 
-    .shopify--variant-title {
-      font-weight: bold;
-    }
+        .shopify--variant-title {
+          font-weight: bold;
+        }
 
-    .shopify--variant-price {
-      font-size: 90%;
-    }
+        .shopify--variant-price {
+          font-size: 90%;
+        }
 
-    shopify-increment {
-      margin-bottom: var(--shopify--size-6);
-    }
-
-    button[type="submit"] {
-      display: block;
-      width: 100%;
-      border: none;
-      border-radius: var(--shopify--radius);
-      cursor: pointer;
-      height: var(--shopify--size-3);
-      font-size: var(--shopify--size-6);
-      font-weight: 300;
-      color: var(--shopify--color-white);
-      background-color: var(--shopify--color-link);
-    }
-
-    button:disabled {
-      background-color: var(--shopify--color-grey);
-      cursor: not-allowed;
-    }
-
-  `;
+        shopify-increment {
+          margin-bottom: var(--shopify--size-6);
+        }
+      `
+    ]
+  };
 
   @property({type: Array})
   variants: ProductVariant[] = [];
@@ -171,7 +158,7 @@ export class AddToCart extends LitElement {
             @change="${this.onInput}">
           </shopify-increment>
         `: ''}
-        <button type="submit" ?disabled="${this.status === 'loading' || this.quantity <= 0}">
+        <button class="button fullwidth" type="submit" ?disabled="${this.status === 'loading' || this.quantity <= 0}">
           ${this.status === 'loading' ? 'Loading' : html`Add to Cart | ${formatPrice(this.total)}`}
         </button>
       </form>

@@ -5,11 +5,13 @@
     <meta charset="utf-8">
     <title>&lt;shopify-cart-button> Demo</title>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1" name="viewport">
-    <script type="module" src="../shopify-cart-button.js"></script>
+    <script type="module" src="../lib/shopify-cart-button.js"></script>
+    <script type="module" src="../lib/shopify-add-to-cart.js"></script>
     <style>
       html {
         --shopify--color-primary: #e2997c;
         --shopify--color-primary-highlight: #ebb7a2;
+        --shopify--color-link: darkgreen;
         --shopify--color-white: white;
         --shopify--color-dark: #222;
         --shopify--color-grey: #bbb;
@@ -48,7 +50,7 @@
   </head>
   <body>
     <section>
-      <shopify-cart-button id="cartButton" update-action="/dev/data/cart.json" remove-action="/dev/data/change.json">
+      <shopify-cart-button id="cartButton" update-action="/dev/data/cart.json" remove-action="/dev/data/change.json" cart-action="/dev">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="32px"
@@ -75,9 +77,12 @@
       </shopify-cart-button>
     </section>
     <section>
-      <button onclick="document.getElementById('cartButton').updateCart()">
-        Hi there
-      </button>
+      <shopify-add-to-cart
+          notify="cartButton"
+          quantity="1"
+          variants='[{"id":33865077784621,"title":"30 Count","option1":"30 Count","option2":null,"option3":null,"sku":"CORV-CAP30","requires_shipping":true,"taxable":true,"featured_image":null,"available":true,"name":"Corvus - 30 Count","public_title":"30 Count","options":["30 Count"],"price":2500,"weight":0,"compare_at_price":null,"inventory_management":"shopify","barcode":null},{"id":33865077817389,"title":"60 Count","option1":"60 Count","option2":null,"option3":null,"sku":"CORV-CAP60","requires_shipping":true,"taxable":true,"featured_image":null,"available":true,"name":"Corvus - 60 Count","public_title":"60 Count","options":["60 Count"],"price":3500,"weight":0,"compare_at_price":null,"inventory_management":"shopify","barcode":null}] '
+        >
+      </shopify-add-to-cart>
     </section>
   </body>
 </html>

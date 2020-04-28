@@ -4,7 +4,7 @@ export declare class CartButton extends LitElement {
     private _initialized;
     static styles: import("lit-element").CSSResult;
     quantity: number;
-    href: string;
+    cartAction: string;
     updateAction: string;
     removeAction: string;
     firstUpdated(): void;

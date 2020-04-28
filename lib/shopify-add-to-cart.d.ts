@@ -1,7 +1,7 @@
 import { LitElement } from 'lit-element';
 import './shopify-increment';
 export declare class AddToCart extends LitElement {
-    static styles: import("lit-element").CSSResult;
+    static get styles(): import("lit-element").CSSResult[];
     variants: ProductVariant[];
     quantity: number;
     min: number;

@@ -19,7 +19,7 @@ const base = css`
   }
 
   .button:hover {
-    background-color: var(--shopify--color-link-highlight);
+    background-color: var(--shopify--color-link--highlight);
   }
 
   .button.fullwidth {

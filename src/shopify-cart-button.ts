@@ -72,6 +72,9 @@ export class CartButton extends LitElement {
   @property({type: Number})
   quantity = 0;
 
+  @property({type: Array})
+  items = [];
+
   @property({type: String, attribute: 'cart-action'})
   cartAction = Defaults.DEFAULT_CART_ACTION;
 
@@ -88,19 +91,10 @@ export class CartButton extends LitElement {
   async updateCart() {
     try {
       const { item_count: count, items } = await this.getCart();
+      this.items = items;
       this.quantity = count;
       if(this._initialized) {
-        let preview;
-        if(!document.querySelector('shopify-cart-preview')) {
-          preview = document.createElement('shopify-cart-preview');
-          document.body.appendChild(preview);
-          preview!.addEventListener('remove', () => { this.updateCart() })
-        } else {
-          preview = document.querySelector('shopify-cart-preview');
-        }
-        preview!.setAttribute('remove-action', this.removeAction);
-        preview!.setAttribute('cart-action', this.cartAction);
-        preview!.items = items;
+        this.displayCartPreview();
         this.animateUpdate()
       }
     } catch(error) {
@@ -108,6 +102,21 @@ export class CartButton extends LitElement {
     }
 
     this._initialized = true;
+  }
+
+  private displayCartPreview() {
+    if(!this.items) return;
+    let preview;
+    if(!document.querySelector('shopify-cart-preview')) {
+      preview = document.createElement('shopify-cart-preview');
+      document.body.appendChild(preview);
+      preview!.addEventListener('remove', () => { this.updateCart() })
+    } else {
+      preview = document.querySelector('shopify-cart-preview');
+    }
+    preview!.setAttribute('remove-action', this.removeAction);
+    preview!.setAttribute('cart-action', this.cartAction);
+    preview!.items = this.items;
   }
 
   private animateUpdate() {
@@ -120,6 +129,16 @@ export class CartButton extends LitElement {
     const {el, context} = this as any;
     el.removeEventListener('animationend', context.handleAnimationEnd.bind(this));
     el.classList.remove('updated');
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.addEventListener('mouseover', this.displayCartPreview);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.removeEventListener('mouseover', this.displayCartPreview);
   }
 
   private async getCart() {

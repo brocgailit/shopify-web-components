@@ -18,6 +18,16 @@ export class CartPreview extends LitElement {
       buttonStyle,
       deleteStyle,
       css`
+        @keyframes zoomIn {
+          from {
+            opacity: 0;
+            transform: scale(0);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
         :host {
           position: fixed;
           top: calc(var(--shopify--navbar-height) + 1rem);
@@ -28,6 +38,8 @@ export class CartPreview extends LitElement {
           z-index: 666;
           max-width: calc(100% - 2rem);
           width: 250px;
+          transform-origin: top center;
+          animation: zoomIn 250ms ease-in-out;
         }
 
         ul {

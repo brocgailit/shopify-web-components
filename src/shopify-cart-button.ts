@@ -8,11 +8,24 @@ export class CartButton extends LitElement {
   private _initialized = false;
 
   static styles = css`
+
+    @keyframes attention {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.5);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
     :host {
       display: inline-block;
       cursor: pointer;
       position: relative;
-    }
+    }      
 
     a {
       color: currentColor;
@@ -50,6 +63,10 @@ export class CartButton extends LitElement {
       -webkit-filter: invert(100%);
       filter: invert(100%);
     }
+
+    #count.updated {
+      animation: attention 500ms ease-in-out;
+    }
   `;
 
   @property({type: Number})
@@ -84,6 +101,7 @@ export class CartButton extends LitElement {
         preview!.setAttribute('remove-action', this.removeAction);
         preview!.setAttribute('cart-action', this.cartAction);
         preview!.items = items;
+        this.animateUpdate()
       }
     } catch(error) {
       console.error(new Error('Cart is currently unavailable.'));
@@ -92,7 +110,19 @@ export class CartButton extends LitElement {
     this._initialized = true;
   }
 
-  async getCart() {
+  private animateUpdate() {
+    const animateEl = this.shadowRoot!.getElementById('count')!;
+    animateEl.classList.add('updated');
+    animateEl.addEventListener('animationend', this.handleAnimationEnd.bind({el: animateEl, context: this}));
+  }
+
+  private handleAnimationEnd() {
+    const {el, context} = this as any;
+    el.removeEventListener('animationend', context.handleAnimationEnd.bind(this));
+    el.classList.remove('updated');
+  }
+
+  private async getCart() {
     return fetch(this.updateAction).then(res => res.json());
   }
 

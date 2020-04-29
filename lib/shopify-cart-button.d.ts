@@ -9,7 +9,9 @@ export declare class CartButton extends LitElement {
     removeAction: string;
     firstUpdated(): void;
     updateCart(): Promise<void>;
-    getCart(): Promise<any>;
+    private animateUpdate;
+    private handleAnimationEnd;
+    private getCart;
     render(): import("lit-element").TemplateResult;
 }
 declare global {

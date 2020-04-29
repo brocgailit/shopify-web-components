@@ -15,6 +15,7 @@ interface CartItem {
     title: string;
     quantity: number;
     featured_image: FeaturedImage;
+    url: string;
 }
 interface FeaturedImage {
     url: string;

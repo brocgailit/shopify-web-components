@@ -18,79 +18,83 @@ export class CartPreview extends LitElement {
       buttonStyle,
       deleteStyle,
       css`
-    :host {
-      position: fixed;
-      top: calc(var(--shopify--navbar-height) + 1rem);
-      right: 1rem;
-      background-color: var(--shopify--color-white);
-      box-shadow: 0 0 5px rgba(0,0,0,0.25);
-      border-radius: var(--shopify--radius);
-      z-index: 666;
-    }
+        :host {
+          position: fixed;
+          top: calc(var(--shopify--navbar-height) + 1rem);
+          right: 1rem;
+          background-color: var(--shopify--color-white);
+          box-shadow: 0 0 5px rgba(0,0,0,0.25);
+          border-radius: var(--shopify--radius);
+          z-index: 666;
+          max-width: calc(100% - 2rem);
+          width: 250px;
+        }
 
-    ul {
-      list-style: none;
-      margin: 0;
-      padding: 0.75rem;
-    }
+        ul {
+          list-style: none;
+          margin: 0;
+          padding: 0.75rem;
+        }
 
-    li {
-      padding: 1em 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: var(--shopify--size-7);
-      display: grid;
-      grid-template:
-        'image item actions'
-        'image quantity actions';
-      grid-column-gap: 10px;
-    }
+        li {
+          padding: 1em 0;
+          align-items: center;
+          justify-content: space-between;
+          font-size: var(--shopify--size-7);
+          display: grid;
+          grid-template-areas:
+            'image item actions'
+            'image quantity actions';
+          grid-template-columns: 50px 1fr auto;
+          grid-template-rows: auto 1fr;
+          grid-column-gap: 10px;
+        }
 
-    li:first-child {
-      padding-top: 0;
-    }
+        li:first-child {
+          padding-top: 0;
+        }
 
-    li:last-child {
-      padding-bottom: 0;
-    }
+        li:last-child {
+          padding-bottom: 0;
+        }
 
-    li:not(:last-child) {
-      border-bottom: 1px solid var(--shopify--color-grey);
-    }
+        li:not(:last-child) {
+          border-bottom: 1px solid var(--shopify--color-grey);
+        }
 
-    .item--image {
-      margin: 0;
-      width: 50px;
-      height: 50px;
-      grid-area: image;
-    }
+        .item--image {
+          margin: 0;
+          width: 50px;
+          height: 50px;
+          grid-area: image;
+        }
 
-    .item--image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+        .item--image img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
 
-    .item--name {
-      grid-area: item;
-    }
+        .item--name {
+          grid-area: item;
+        }
 
-    .item--quantity {
-      grid-area: quantity;
-      font-size: 75%;
-      color: var(--shopify--color-grey);
-    }
+        .item--quantity {
+          grid-area: quantity;
+          font-size: 75%;
+          color: var(--shopify--color-grey);
+          align-self: flex-start;
+        }
 
-    .item--actions {
-      grid-area: actions;
-    }
+        .item--actions {
+          grid-area: actions;
+        }
 
-    .button {
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
-    }
-  `
+        .button {
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+        }
+      `
     ]
   };
 
@@ -163,11 +167,11 @@ export class CartPreview extends LitElement {
             <figure class="item--image">
               <img src="${resizeImage(item.featured_image.url, 'thumb')}">
             </figure>
-            <span class="item--name">${item.title}</span>
+            <a href="${item.url}" class="item--name">${item.title}</a>
             <span class="item--quantity">Quantity: ${item.quantity}</span>
             <div class="item--actions">
               <button class="delete" @click="${() => this.removeItem(item.id)}">
-                X
+                Remove from Cart
               </button>
             </div>
           </li>
@@ -185,6 +189,7 @@ interface CartItem {
   title: string;
   quantity: number;
   featured_image: FeaturedImage;
+  url: string;
 }
 
 interface FeaturedImage {

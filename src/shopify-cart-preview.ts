@@ -1,14 +1,9 @@
 import { LitElement, html, customElement, property, css } from 'lit-element';
 import { repeat } from 'lit-html/directives/repeat';
 import Defaults from './defaults';
-
-import { directive } from 'lit-html';
+import { resizeImage } from './directives';
+import { CartItem } from './interfaces';
 import { base as buttonStyle, deleteStyle } from './style/buttonStyles.js';
-
-const resizeImage = directive((price, size) => (part) => {
-  const [, name, extension] = price.match(/(.*\/[\w\-\_\.]+)\.(\w{2,4})/);
-  part.setValue(`${name}_${size}.${extension}`);
-});
 
 @customElement('shopify-cart-preview')
 export class CartPreview extends LitElement {
@@ -129,7 +124,7 @@ export class CartPreview extends LitElement {
   items: CartItem[] = [];
 
   @property({ type: String, attribute: 'remove-action' })
-  removeAction = Defaults.DEFAULT_REMOVE_ACTION;
+  removeAction = Defaults.DEFAULT_CHANGE_ACTION;
 
   @property({ type: String, attribute: 'cart-action' })
   cartAction = Defaults.DEFAULT_CART_ACTION;
@@ -138,7 +133,7 @@ export class CartPreview extends LitElement {
     const item = this.items.find(item => item.id === id);
     try {
       let options = {};
-      if (this.removeAction === Defaults.DEFAULT_REMOVE_ACTION) {
+      if (this.removeAction === Defaults.DEFAULT_CHANGE_ACTION) {
         options = {
           method: 'POST',
           headers: {
@@ -188,20 +183,24 @@ export class CartPreview extends LitElement {
   render() {
     return this.items?.length ? html`
       <ul>
-        ${repeat(this.items, (item) => item.id, (item) => html`
-          <li>
-            <figure class="item--image">
-              <img src="${resizeImage(item.featured_image.url, 'thumb')}">
-            </figure>
-            <a href="${item.url}" class="item--name">${item.title}</a>
-            <span class="item--quantity">Quantity: ${item.quantity}</span>
-            <div class="item--actions">
-              <button class="delete" @click="${() => this.removeItem(item.id)}">
-                Remove from Cart
-              </button>
-            </div>
-          </li>
-        `)}
+        ${repeat(
+          this.items,
+          (item) => item.id,
+          (item) => html`
+            <li>
+              <figure class="item--image">
+                <img src="${resizeImage(item.featured_image.url, 'thumb')}">
+              </figure>
+              <a href="${item.url}" class="item--name">${item.title}</a>
+              <span class="item--quantity">Quantity: ${item.quantity}</span>
+              <div class="item--actions">
+                <button class="delete" @click="${() => this.removeItem(item.id)}">
+                  Remove from Cart
+                </button>
+              </div>
+            </li>
+          `
+        )}
       </ul>
       <a class="button fullwidth small" href="${this.cartAction}">
         View Cart
@@ -209,23 +208,6 @@ export class CartPreview extends LitElement {
     `: ''
   }
 }
-
-interface CartItem {
-  id: number;
-  title: string;
-  quantity: number;
-  featured_image: FeaturedImage;
-  url: string;
-}
-
-interface FeaturedImage {
-  url: string;
-  alt: string;
-  aspect_ratio: number;
-  width: number;
-  height: number;
-}
-
 declare global {
   interface HTMLElementTagNameMap {
     'shopify-cart-preview': CartPreview;

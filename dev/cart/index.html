@@ -1,0 +1,52 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Shopify Cart Demo</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1" name="viewport">
+    <script type="module" src="../../lib/shopify-cart.js"></script>
+    <style>
+      html {
+        --shopify--color-primary: #e2997c;
+        --shopify--color-primary--highlight: #ebb7a2;
+        --shopify--color-link: darkgreen;
+        --shopify--color-link--highlight: green;
+        --shopify--color-white: white;
+        --shopify--color-dark: #222;
+        --shopify--color-grey: #bbb;
+        --shopify--size-1: 5rem;
+        --shopify--size-2: 3.75rem;
+        --shopify--size-3: 2.75rem;
+        --shopify--size-4: 2rem;
+        --shopify--size-5: 1.5rem;
+        --shopify--size-6: 1.1rem;
+        --shopify--size-7: 0.9rem;
+        --shopify--size-8: 0.7rem;
+        --shopify--radius: 3px;
+        --shopify--navbar-height: 4rem;
+      }
+      body {
+        background-color: #eee;
+      }
+      p {
+        margin: 0;
+        padding: 0 8px 1em;
+        text-align: center;
+      }
+      section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 50vh;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Shopping Cart</h1>
+    <section>
+      <shopify-cart update-action="/dev/data/cart.json" remove-action="/dev/data/change.json">
+      </shopify-cart>
+    </section>
+  </body>
+</html>

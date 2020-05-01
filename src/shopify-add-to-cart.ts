@@ -1,16 +1,8 @@
 import { LitElement, html, customElement, property, internalProperty, css } from 'lit-element';
-import { directive, NodePart } from 'lit-html';
 import { repeat } from 'lit-html/directives/repeat';
 import { base as buttonStyle } from './style/buttonStyles.js';
+import { formatPrice } from './directives';
 import './shopify-increment';
-
-const formatPrice = directive((price) => (part: NodePart) => {
-  const formatted = price.toLocaleString('en-US', {
-    style: 'currency',
-    currency: 'USD'
-  });
-  part.setValue(formatted + '');
-});
 
 @customElement('shopify-add-to-cart')
 export class AddToCart extends LitElement {

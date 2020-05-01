@@ -82,7 +82,7 @@ export class CartButton extends LitElement {
   updateAction = Defaults.DEFAULT_UPDATE_ACTION;
 
   @property({type: String, attribute: 'remove-action'})
-  removeAction = Defaults.DEFAULT_REMOVE_ACTION;
+  removeAction = Defaults.DEFAULT_CHANGE_ACTION;
 
   firstUpdated() {
     this.updateCart();
